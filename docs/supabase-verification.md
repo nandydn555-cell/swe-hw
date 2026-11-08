@@ -28,4 +28,12 @@ UI-ийн хиймэл API тест нь production RLS-ийн баталгаа 
 
 ## Байршуулалтын эцсийн шалгалт
 
-Нийтийн Vercel URL дээр signup → login → profile → upload → submit → admin publish → owner revision → delete болон capsule moderation урсгалыг шалгана. Supabase Site URL/redirect domain нийтийн URL-тай таарах ёстой. Нийтийн URL баталгаажсаны дараа README-д нэмнэ.
+Нийтийн demo: https://swe-hw-9f89.vercel.app/ . Production environment variables нэмээд Redeploy хийсний дараа `BASE_URL`-тай live smoke тест PASS болсон.
+
+- Нүүр хуудас authentication шаардахгүйгээр HTTP 200.
+- `teachers`, `exhibits`, `events`, `time_capsules`, `event_photos` Data API хүсэлтүүд бүгд HTTP 200.
+- Серверийн 7 бүтээл, 10 багш, 5 арга хэмжээ харагдсан; цомгийн зураг decode амжилттай.
+- Хайлтын илэрцгүй төлөв, дэлгэрэнгүй цонх, зочинд удирдах товч харагдахгүй байх шалгалт PASS.
+- 360/390/768/1440 px өргөнд хөндлөн халилтгүй; browser exception 0.
+
+Нэвтэрсэн хэрэглэгчийн CRUD, gallery upload, profile, capsule moderation урсгалууд хиймэл API-тай browser регрессийн тестээр, эрхийн дүрмүүд серверийн SQL тестээр шалгагдсан. Нийтийн domain дээр хэрэглэгчийн account-аар binary upload болон email recovery урсгалыг энэ read-only тест хийгээгүй. Supabase Site URL/redirect domain нь email холбоос ашиглах үед нийтийн URL-тай таарах ёстой.
