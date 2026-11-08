@@ -2,6 +2,7 @@
 
 Мэдээллийн системийн менежментийн тэнхимийн түүх, багш, арга хэмжээ, оюутны бүтээлийг хадгалж танилцуулах интерактив веб апп.
 
+- Demo: https://swe-hw-9f89.vercel.app/
 - Эх код: https://github.com/nandydn555-cell/swe-hw
 - Frontend: React 18, JavaScript, Vite, Lucide.
 - Backend: Supabase Auth, PostgreSQL, Storage, Row Level Security.
@@ -112,7 +113,7 @@ node tests/live-smoke.mjs
 4. Deploy хийж, Supabase Auth → URL Configuration-д нийтийн domain-аа Site URL болон зөвшөөрөх redirect URL-д нэмнэ.
 5. Нийтийн URL дээр бүртгэл, гаралт, бүтээл, gallery upload, capsule-аа шалгана.
 
-`vercel.json` нь SPA rewrite-тэй. Demo URL-ийг deploy амжилттай баталгаажсаны дараа энэ README-д нэмнэ.
+`vercel.json` нь SPA rewrite-тэй. Нийтийн demo URL-ийг дээр оруулсан; environment өөрчилсний дараа Vite build-ийг Redeploy хийнэ.
 
 ## Агуулга ба хамгаалалт
 
