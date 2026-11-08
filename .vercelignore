@@ -6,3 +6,4 @@ dist/
 tmp/
 .agents/
 .codex/
+output/

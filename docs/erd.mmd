@@ -1,0 +1,63 @@
+erDiagram
+  AUTH_USERS ||--|| PROFILES : owns
+  PROFILES ||--o{ EXHIBITS : creates
+  EXHIBITION_CATEGORIES ||--o{ EXHIBITS : classifies
+  EVENTS ||--o{ EVENT_PHOTOS : contains
+  PROFILES o|--o{ TIME_CAPSULES : leaves
+
+  PROFILES {
+    uuid id PK
+    text display_name
+    text avatar_url
+    text role
+  }
+  EXHIBITION_CATEGORIES {
+    uuid id PK
+    text name UK
+    text description
+  }
+  EXHIBITS {
+    uuid id PK
+    uuid creator_id FK
+    text creator_name
+    text collection
+    jsonb archive_details
+    uuid category_id FK
+    text title
+    text description
+    text image_url
+    text demo_url
+    text github_url
+    text status
+    int year_created
+  }
+  TEACHERS {
+    uuid id PK
+    text name
+    text position
+    text[] courses
+    text bio
+    text photo_url
+  }
+  EVENTS {
+    uuid id PK
+    text title
+    date event_date
+    text description
+    text cover_image_url
+    text event_type
+    jsonb article
+  }
+  EVENT_PHOTOS {
+    uuid id PK
+    uuid event_id FK
+    text image_url
+    text caption
+  }
+  TIME_CAPSULES {
+    uuid id PK
+    uuid user_id FK
+    text message
+    text author_name
+    boolean approved
+  }

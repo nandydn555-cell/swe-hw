@@ -6,6 +6,7 @@
 - Эх код: https://github.com/nandydn555-cell/swe-hw
 - Frontend: React 18, JavaScript, Vite, Lucide.
 - Backend: Supabase Auth, PostgreSQL, Storage, Row Level Security.
+- [Хүлээлгэн өгөх материал](docs/handover.md)
 - [ERD, wireframe, 5–7 минутын demo](docs/architecture-and-demo.md)
 - [Шалгалтын үр дүн](docs/supabase-verification.md)
 - [Агуулгын эх сурвалж](docs/content-sources.md)

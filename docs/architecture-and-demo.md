@@ -1,5 +1,7 @@
 # ISM Digital Museum: architecture and demo plan
 
+[ERD зураг](erd.svg) · [Mermaid эх](erd.mmd) · [Wireframe](wireframe.svg) · [Монгол demo текст](demo-script-mn.md)
+
 ## Data model (ERD)
 
 ```mermaid
@@ -40,6 +42,7 @@ erDiagram
     uuid id PK
     text name
     text position
+    text[] courses
     text bio
     text photo_url
   }
