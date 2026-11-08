@@ -34,6 +34,9 @@ create table if not exists public.exhibits (
   technology_stack text[] not null default '{}',
   year_created integer not null check (year_created between 1900 and 2200),
   creator_id uuid not null references public.profiles(id) on delete cascade,
+  creator_name text,
+  collection text not null default 'Оюутны бүтээл',
+  archive_details jsonb not null default '{}'::jsonb,
   demo_url text,
   github_url text,
   status text not null default 'pending' check (status in ('pending','published','rejected')),
@@ -50,6 +53,7 @@ create table if not exists public.teachers (
 create table if not exists public.events (
   id uuid primary key default gen_random_uuid(), title text not null,
   event_date date not null, description text, cover_image_url text,
+  event_type text, article jsonb,
   created_at timestamptz not null default now()
 );
 
@@ -70,8 +74,8 @@ create table if not exists public.time_capsules (
 );
 
 create or replace function public.is_admin()
-returns boolean language sql stable security definer set search_path = public
-as $$ select exists(select 1 from public.profiles where id = auth.uid() and role = 'admin') $$;
+returns boolean language sql stable security invoker set search_path = ''
+as $$ select exists(select 1 from public.profiles where id = (select auth.uid()) and role = 'admin') $$;
 
 -- Keep the public profile editor from letting a regular user grant themselves admin.
 create or replace function public.prevent_profile_role_escalation()
@@ -133,9 +137,9 @@ create policy "Published exhibits are public; owners and admins see all" on publ
   using (status = 'published' or creator_id = auth.uid() or public.is_admin());
 create policy "Creators submit own exhibits" on public.exhibits for insert
   with check (creator_id = auth.uid() and status = 'pending');
-create policy "Owners update own pending exhibits" on public.exhibits for update
-  using ((creator_id = auth.uid() and status = 'pending') or public.is_admin())
-  with check ((creator_id = auth.uid() and status = 'pending') or public.is_admin());
+create policy "Owners revise own exhibits" on public.exhibits for update to authenticated
+  using (creator_id = (select auth.uid()))
+  with check (creator_id = (select auth.uid()) and status = 'pending');
 create policy "Owners delete own exhibits; admins manage all" on public.exhibits for delete
   using (creator_id = auth.uid() or public.is_admin());
 drop policy if exists "Admins manage exhibits" on public.exhibits;
@@ -163,3 +167,15 @@ create policy "Creators update own files" on storage.objects for update to authe
   with check (bucket_id = 'museum-media' and (storage.foldername(name))[1] = auth.uid()::text);
 create policy "Creators delete own files" on storage.objects for delete to authenticated
   using (bucket_id = 'museum-media' and ((storage.foldername(name))[1] = auth.uid()::text or public.is_admin()));
+
+create index if not exists exhibits_creator_id_idx on public.exhibits(creator_id);
+create index if not exists event_photos_event_id_idx on public.event_photos(event_id);
+create index if not exists time_capsules_user_id_idx on public.time_capsules(user_id);
+
+grant select on public.profiles, public.exhibition_categories, public.exhibits,
+  public.teachers, public.events, public.event_photos, public.time_capsules to anon, authenticated;
+grant insert, update, delete on public.exhibits, public.teachers, public.events,
+  public.event_photos, public.exhibition_categories to authenticated;
+grant update on public.profiles to authenticated;
+grant insert on public.time_capsules to anon, authenticated;
+grant update, delete on public.time_capsules to authenticated;

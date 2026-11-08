@@ -24,6 +24,9 @@ erDiagram
   EXHIBITS {
     uuid id PK
     uuid creator_id FK
+    text creator_name
+    text collection
+    jsonb archive_details
     uuid category_id FK
     text title
     text description
@@ -46,6 +49,8 @@ erDiagram
     date event_date
     text description
     text cover_image_url
+    text event_type
+    jsonb article
   }
   EVENT_PHOTOS {
     uuid id PK
@@ -98,4 +103,14 @@ The `exhibits.category` text remains for compatibility with the current UI. A da
 6. **5:30–6:30 — Creative detail:** Invite a visitor to leave a note for a future student; explain that only approved notes appear on the capsule wall.
 7. **6:30–7:00 — Wrap up:** Summarize the archive's value and identify where verified department data will be maintained.
 
-Before a public presentation, replace the sample teachers, events, and historical dates with department-approved information and configure a live Supabase project.
+## Хамгаалалтын 5–7 минутын дараалал
+
+1. **0:00–0:45:** Музейн зорилго, React/Vite + Supabase архитектурыг тайлбарлана.
+2. **0:45–2:00:** Нэр, он, технологиор хайлт; ангилал, бүтээлийн төрөл; дэлгэрэнгүй, эх сурвалж, зохиогчийг үзүүлнэ.
+3. **2:00–3:00:** Багшийн танилцуулга, түүх, арга хэмжээний цомгийг нээнэ.
+4. **3:00–4:15:** Оюутнаар нэвтэрч профайл засах, зурагтай бүтээл илгээх; pending төлөвийг харуулна.
+5. **4:15–5:30:** Админаар бүтээл нийтлэх, дараа нь оюутан засахад дахин pending болохыг үзүүлнэ. PK/FK, RLS, UUID Storage хавтасны зориулалтыг тайлбарлана.
+6. **5:30–6:30:** Digital Time Capsule-д захиа үлдээж, админ хянаад хананд гаргахыг үзүүлнэ.
+7. **6:30–7:00:** Утасны харагдах байдал, GitHub commit түүх, тестийн үр дүн, AI ашигласан хэсэг болон өөрийн тайлбарлаж чадах шийдлийг танилцуулна.
+
+Архивын агуулга бодит Supabase-д хадгалагдсан. Эх сурвалжийг `content-sources.md`-д бүртгэсэн. `creator_id` нь мөр удирдах account, `creator_name` нь архивын анхны зохиогч/багийн нэр юм. Нийтлэгдсэн бүтээлээ оюутан засахад админы хяналтад дахин орно.
